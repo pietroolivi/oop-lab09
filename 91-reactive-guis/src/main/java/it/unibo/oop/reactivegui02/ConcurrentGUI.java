@@ -24,6 +24,9 @@ public final class ConcurrentGUI extends JFrame {
     private final JButton up = new JButton("up");
     private final JButton down = new JButton("down");
 
+    /**
+    * Builds and displays the GUI.
+    */
     public ConcurrentGUI() {
 
         super();
@@ -38,10 +41,10 @@ public final class ConcurrentGUI extends JFrame {
         panel.add(stop);
         this.getContentPane().add(panel);
         this.setVisible(true);
-        
+
         final Agent agent = new Agent();
         new Thread(agent).start();
-        
+
         up.addActionListener((e) -> agent.isIncremental = true);
         down.addActionListener((e) -> agent.isIncremental = false);
         stop.addActionListener((e) -> {
@@ -53,11 +56,11 @@ public final class ConcurrentGUI extends JFrame {
     }
 
     private class Agent implements Runnable {
-        
+
         private volatile boolean stop;
-        private int counter = 0;
+        private int counter;
         private volatile boolean isIncremental = true;
-        
+
         @Override
         public void run() {
             try {
@@ -65,17 +68,20 @@ public final class ConcurrentGUI extends JFrame {
                     final var nextInt = Integer.toString(this.counter);
                     SwingUtilities.invokeAndWait(() -> ConcurrentGUI.this.display.setText(nextInt));
                     if (this.isIncremental) {
-                        this.counter ++;
+                        this.counter++;
                     } else {
-                        this.counter --;
+                        this.counter--;
                     }
                     Thread.sleep(100);
                 }
-            } catch(InvocationTargetException | InterruptedException ex) {
-                    ex.printStackTrace();
+            } catch (InvocationTargetException | InterruptedException ex) {
+                    ex.printStackTrace(); // NOPMD: this is just an exercise
             }
-        } 
+        }
 
+        /**
+        * Stops the counter.
+        */
         public void stopCounting() {
             this.stop = true;
         }
