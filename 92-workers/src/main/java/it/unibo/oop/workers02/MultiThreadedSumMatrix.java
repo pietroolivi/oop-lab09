@@ -39,7 +39,7 @@ public final class MultiThreadedSumMatrix implements SumMatrix {
         for (final Worker w: workers) {
             w.start();
         }
-        long sum = 0;
+        double sum = 0;
         for (final Worker w: workers) {
             try {
                 w.join();
@@ -84,7 +84,7 @@ public final class MultiThreadedSumMatrix implements SumMatrix {
 
         @Override
         public void run() {
-            System.out.println("Working from position " + startPos + " to position " + (startPos + numElem - 1)); // NOPMD: this is just an exercise
+            System.out.println("Working from position " + startPos + " to position " + (startPos + numElem - 1)); // NOPMD
             for (int i = startPos; i < list.size() && i < startPos + numElem; i++) {
                 this.res += this.list.get(i);
             }
