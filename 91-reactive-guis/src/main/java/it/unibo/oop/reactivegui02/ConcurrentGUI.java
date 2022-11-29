@@ -32,7 +32,6 @@ public final class ConcurrentGUI extends JFrame {
         super();
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize((int) (screenSize.getWidth() * WIDTH_PERC), (int) (screenSize.getHeight() * HEIGHT_PERC));
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         final JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         panel.add(display);
@@ -40,6 +39,7 @@ public final class ConcurrentGUI extends JFrame {
         panel.add(down);
         panel.add(stop);
         this.getContentPane().add(panel);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
         final Agent agent = new Agent();
